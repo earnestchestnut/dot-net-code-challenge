@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CodeChallenge.Models;
@@ -29,7 +28,11 @@ namespace CodeChallenge.Repositories
 
         public Employee GetById(string id)
         {
-            return _employeeContext.Employees.SingleOrDefault(e => e.EmployeeId == id);
+            return _employeeContext.Employees
+            .Where(e => e.EmployeeId == id)
+            .Include(e => e.DirectReports)
+            .ThenInclude(e => e.DirectReports)
+            .SingleOrDefault();
         }
 
         public Task SaveAsync()
