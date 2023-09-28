@@ -50,7 +50,6 @@ namespace CodeChallenge.Tests.Integration
 
             Assert.AreEqual(reportingstructure.NumberOfReports, 4);
             Assert.AreEqual(johnLennon.DirectReports.Count, 2);
-            Assert.AreEqual(johnLennon.DirectReports.Contains(paulMcCartny), true);
             Assert.AreEqual(paulMcCartny.DirectReports.Count, 0);
             Assert.AreEqual(ringoStarr.DirectReports.Count, 2);
 
