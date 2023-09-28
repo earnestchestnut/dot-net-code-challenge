@@ -18,6 +18,8 @@ namespace CodeChallenge.Config
             args ??= Array.Empty<string>();
 
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
             builder.UseEmployeeDB();
             
@@ -30,6 +32,9 @@ namespace CodeChallenge.Config
             {
                 app.UseDeveloperExceptionPage();
                 SeedEmployeeDB();
+
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.EnableTryItOutByDefault());
             }
 
             app.UseAuthorization();

@@ -1,4 +1,6 @@
-﻿using CodeChallenge.Services;
+﻿using CodeChallenge.Models;
+using CodeChallenge.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -20,6 +22,10 @@ namespace CodeChallenge.Controllers
         }
 
         [HttpGet("{employeeId}", Name = "getReportingStructureByEmployeeId")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ReportingStructure), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetEmployeeById(string employeeId)
         {
             string msg = $"Received reporting structure get request for '{employeeId}'";

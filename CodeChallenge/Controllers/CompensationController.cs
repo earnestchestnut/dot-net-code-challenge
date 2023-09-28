@@ -1,5 +1,6 @@
 ﻿using CodeChallenge.Models;
 using CodeChallenge.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -26,6 +27,12 @@ namespace CodeChallenge.Controllers
         }
 
         [HttpPost]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Compensation), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public IActionResult CreateCompensation([FromBody] CompensationCreateRequest compensationCreateRequest)
         {
             if(compensationCreateRequest is null)
@@ -76,6 +83,10 @@ namespace CodeChallenge.Controllers
         }
 
         [HttpGet("{employeeId}", Name ="getCompensationbyEmployeeId")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Compensation), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public IActionResult GetCompensationByEmplyeeId(string employeeId)
         {
             if(employeeId is null)
