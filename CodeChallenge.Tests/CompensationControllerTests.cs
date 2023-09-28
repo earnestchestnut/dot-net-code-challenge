@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using CodeChallenge.Models;
@@ -46,11 +47,15 @@ namespace CodeChallenge.Tests.Integration
             // Execute
             var postRequestTask = _httpClient.PostAsync("api/compensation", new StringContent(requestContent, Encoding.UTF8, "application/json"));
             var response = postRequestTask.Result;
+            long fourMillionDollars = 4000000;
 
             // Assert
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+
             Compensation compensation = response.DeserializeContent<Compensation>();
-            Assert.AreEqual(compensation.Salary is not 0, true);
+            Assert.IsInstanceOfType(compensation.Employee, typeof(Employee));
+            Assert.AreEqual(compensation.Salary / 100 == fourMillionDollars, true);
+            Assert.IsInstanceOfType(compensation.Effectivedate, typeof(DateTime));
 
         }
 
